@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "topic_id": "synthetic-margin-buffer",
+  "title": "Why a valuation buffer matters",
+  "concept": "margin of safety",
+  "audience": "general learners",
+  "objective": "Explain how uncertainty makes a valuation buffer useful.",
+  "evidence": [
+    {
+      "source_id": "public-like.lesson",
+      "title": "Synthetic classroom note",
+      "source_type": "educational_note",
+      "as_of_date": "2026-01-01",
+      "content_summary": "A valuation estimate depends on uncertain assumptions, so a gap between estimated value and price can absorb some mistakes without eliminating risk.",
+      "content_kind": "public_domain_like",
+      "uri": "",
+      "provenance_ids": []
+    }
+  ],
+  "claims": [
+    {
+      "text": "A valuation buffer is a way to acknowledge estimation error, not a promise against loss.",
+      "source_ids": ["public-like.lesson"]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 [tool.pytest.ini_options]
 addopts = "-ra --strict-config --strict-markers"
-testpaths = ["tests"]
 pythonpath = ["."]
+testpaths = ["tests"]
 
 [tool.ruff]
 target-version = "py310"
@@ -9,8 +9,10 @@ line-length = 88
 src = [
   "packages/social-publish-core/src",
   "packages/value-audit-core/src",
+  "packages/value-investing-explainer/src",
   "skills/lynch-research",
   "scripts",
+  "skills/value-investing-explainer",
   "tests",
 ]
 
@@ -26,7 +28,9 @@ typeCheckingMode = "strict"
 include = [
   "packages/social-publish-core/src",
   "packages/value-audit-core/src",
+  "packages/value-investing-explainer/src",
   "skills/lynch-research/validate.py",
+  "skills/value-investing-explainer/validate.py",
   "tests",
   "examples",
   "scripts",

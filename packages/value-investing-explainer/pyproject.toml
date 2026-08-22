@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "trinity-agentic-kit-value-explainer"
+version = "0.1.0"
+description = "Provider-neutral, evidence-bound value-investing explanations"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "cloga contributors" }]
+keywords = ["agents", "finance", "education", "provenance", "value-investing"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Typing :: Typed",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "build>=1.2",
+  "jsonschema>=4.23",
+  "pyright>=1.1.400",
+  "pytest>=8.3",
+  "pytest-cov>=6.0",
+  "ruff>=0.11",
+]
+
+[project.urls]
+Homepage = "https://github.com/cloga/trinity-agentic-kit"
+Issues = "https://github.com/cloga/trinity-agentic-kit/issues"
+Source = "https://github.com/cloga/trinity-agentic-kit"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/trinity_agentic_kit"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "README.md", "pyproject.toml"]
