@@ -29,12 +29,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
       - run: python -m pip install --upgrade pip
-      - run: python -m pip install -e "packages/social-publish-core[dev]" -e "packages/value-audit-core[dev]" -e "packages/value-audit-tushare[dev]" -e "packages/value-investing-explainer[dev]"
+      - run: python -m pip install -e "packages/social-publish-core[dev]" -e "packages/value-audit-core[dev]" -e "packages/value-audit-tushare[dev]" -e "packages/value-investing-explainer[dev]" -e "packages/douyin-publish-adapter[dev]"
       - run: ruff check .
       - run: ruff format --check .
       - run: pyright
-      - run: python -m pytest --cov=trinity_agentic_kit.social_publish --cov=trinity_agentic_kit.value_audit --cov=trinity_agentic_kit.value_audit_tushare --cov=trinity_agentic_kit.value_explainer --cov-report=term-missing --cov-fail-under=90
+      - run: python -m pytest --cov=trinity_agentic_kit.social_publish --cov=trinity_agentic_kit.value_audit --cov=trinity_agentic_kit.value_audit_tushare --cov=trinity_agentic_kit.value_explainer --cov=trinity_agentic_kit.douyin_adapter --cov-report=term-missing --cov-fail-under=90
       - run: python -m build packages/social-publish-core
       - run: python -m build packages/value-audit-core
       - run: python -m build packages/value-audit-tushare
       - run: python -m build packages/value-investing-explainer
+      - run: python -m build packages/douyin-publish-adapter
