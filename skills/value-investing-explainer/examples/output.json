@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "package_version": "0.1.0",
+  "topic_id": "synthetic-margin-buffer",
+  "title": "Why a valuation buffer matters",
+  "summary": {
+    "text": "Why a valuation buffer matters explains margin of safety for general learners. The explanation is limited to the supplied evidence.",
+    "source_ids": ["public-like.lesson"]
+  },
+  "key_points": [
+    {
+      "text": "A valuation buffer is a way to acknowledge estimation error, not a promise against loss.",
+      "source_ids": ["public-like.lesson"]
+    }
+  ],
+  "caveats": [
+    {
+      "text": "The evidence may be incomplete or become stale.",
+      "source_ids": ["public-like.lesson"]
+    },
+    {
+      "text": "A concept explanation does not determine whether a security is suitable.",
+      "source_ids": ["public-like.lesson"]
+    }
+  ],
+  "scenes": [
+    {
+      "index": 1,
+      "narration": "A valuation buffer is a way to acknowledge estimation error, not a promise against loss.",
+      "visual_direction": "Show a simple, unlabeled comparison for margin of safety; avoid logos, people, and price predictions.",
+      "source_ids": ["public-like.lesson"]
+    }
+  ],
+  "evidence": [
+    {
+      "source_id": "public-like.lesson",
+      "title": "Synthetic classroom note",
+      "source_type": "educational_note",
+      "as_of_date": "2026-01-01",
+      "content_summary": "A valuation estimate depends on uncertain assumptions, so a gap between estimated value and price can absorb some mistakes without eliminating risk.",
+      "content_kind": "public_domain_like",
+      "uri": "",
+      "provenance_ids": []
+    }
+  ],
+  "qa": {
+    "passed": true,
+    "checks": [
+      {"check_id": "evidence-present", "passed": true, "message": "Evidence and key points are present."},
+      {"check_id": "known-provenance", "passed": true, "message": "All explanation blocks and scenes cite known evidence."},
+      {"check_id": "scene-provenance", "passed": true, "message": "Every scene has provenance."},
+      {"check_id": "content-complete", "passed": true, "message": "Explanation and scene content are complete."},
+      {"check_id": "advice-language", "passed": true, "message": "No recommendation or guarantee language detected."},
+      {"check_id": "affiliation-language", "passed": true, "message": "No affiliation or endorsement claim detected."},
+      {"check_id": "copyright", "passed": true, "message": "No substantial evidence passage is reused verbatim."},
+      {"check_id": "disclaimer", "passed": true, "message": "Required advice and affiliation disclaimer is present."},
+      {"check_id": "topic-binding", "passed": true, "message": "Output is bound to the input topic."}
+    ],
+    "issues": []
+  },
+  "provider_name": "deterministic-fake",
+  "disclaimer": "Educational explanation only; not investment, legal, tax, or accounting advice or a recommendation. No affiliation with or endorsement by any investor, author, publisher, estate, employer, or related organization."
+}
