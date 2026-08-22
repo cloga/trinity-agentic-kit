@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cloga/trinity-agentic-kit/schemas/social-publish-request-v1.json",
+  "title": "SocialPublishRequest",
+  "type": "object",
+  "properties": {
+    "request_id": {"type": "string", "minLength": 1},
+    "platform": {"type": "string", "minLength": 1},
+    "media_type": {"type": "string", "minLength": 1},
+    "asset_ref": {"type": "string", "minLength": 1},
+    "title": {"type": "string"},
+    "description": {"type": "string"},
+    "idempotency_key": {"type": "string", "minLength": 1},
+    "metadata": {"type": "object"},
+    "schema_version": {"const": 1}
+  },
+  "required": [
+    "request_id",
+    "platform",
+    "media_type",
+    "asset_ref",
+    "title",
+    "description",
+    "idempotency_key",
+    "metadata",
+    "schema_version"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cloga/trinity-agentic-kit/schemas/platform-publish-result-v1.json",
+  "title": "PlatformPublishResult",
+  "type": "object",
+  "properties": {
+    "submitted": {"type": "boolean"},
+    "verification_pending": {"type": "boolean"},
+    "published_url": {"type": "string"},
+    "platform_reference": {"type": "string"},
+    "evidence": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "error_code": {"type": "string"},
+    "error_message": {"type": "string"},
+    "retryable": {"type": "boolean"},
+    "requires_manual_intervention": {"type": "boolean"}
+  },
+  "required": [
+    "submitted",
+    "verification_pending",
+    "published_url",
+    "platform_reference",
+    "evidence",
+    "error_code",
+    "error_message",
+    "retryable",
+    "requires_manual_intervention"
+  ],
+  "additionalProperties": false
+}
