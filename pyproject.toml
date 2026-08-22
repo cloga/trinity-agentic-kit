@@ -9,6 +9,7 @@ line-length = 88
 src = [
   "packages/social-publish-core/src",
   "packages/value-audit-core/src",
+  "packages/value-audit-tushare/src",
   "packages/value-investing-explainer/src",
   "skills/lynch-research",
   "scripts",
@@ -28,6 +29,7 @@ typeCheckingMode = "strict"
 include = [
   "packages/social-publish-core/src",
   "packages/value-audit-core/src",
+  "packages/value-audit-tushare/src",
   "packages/value-investing-explainer/src",
   "skills/lynch-research/validate.py",
   "skills/value-investing-explainer/validate.py",

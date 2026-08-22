@@ -12,3 +12,8 @@ Analytical style names are descriptive references only. This project is not
 affiliated with, endorsed by, or sponsored by Benjamin Graham, Warren Buffett,
 Bruce Greenwald, Peter Lynch, their estates, employers, publishers, or related
 organizations.
+
+The optional Tushare adapter is not affiliated with or endorsed by Tushare.
+Tushare data access and redistribution remain subject to Tushare's separate
+terms, permissions, and licensing; this product's Apache-2.0 license grants no
+rights to provider data.

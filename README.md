@@ -16,6 +16,7 @@ platform-neutral publication orchestration for Python 3.10+:
 ```bash
 python -m pip install -e "packages/social-publish-core[dev]" \
   -e "packages/value-audit-core[dev]" \
+  -e "packages/value-audit-tushare[dev]" \
   -e "packages/value-investing-explainer[dev]"
 pytest
 ruff check .
@@ -38,6 +39,19 @@ warnings, data gaps, and provenance.
 The package has no network, database, credential, token, or vendor-adapter
 dependency. See the [`lynch-research` Skill](skills/lynch-research/SKILL.md) for
 a public-output-only research workflow.
+
+## Value Audit Tushare
+
+[`value-audit-tushare`](packages/value-audit-tushare) is an optional,
+point-in-time transport adapter. It keeps Tushare network access and field/unit
+mapping separate from `value-audit-core`, which remains the only valuation
+implementation. Callers may inject the public `TushareClient` protocol or use
+the standard-library `HttpsTushareClient`.
+
+The adapter requires an explicit audit date, excludes filings announced later,
+normalizes provider units, emits row-level provenance, uses bounded retry
+errors, and never logs or stores tokens. See its
+[field, licensing, and redistribution notes](packages/value-audit-tushare/README.md).
 
 ## Value Investing Explainer
 
