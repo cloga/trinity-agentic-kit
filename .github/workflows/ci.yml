@@ -33,5 +33,5 @@ jobs:
       - run: ruff check .
       - run: ruff format --check .
       - run: pyright
-      - run: pytest --cov=trinity_agentic_kit.social_publish --cov-report=term-missing --cov-fail-under=90
+      - run: python -m pytest --cov=trinity_agentic_kit.social_publish --cov-report=term-missing --cov-fail-under=90
       - run: python -m build packages/social-publish-core
