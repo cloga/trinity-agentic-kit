@@ -5,11 +5,14 @@
 Python 3.10 or newer is required.
 
 ```bash
-python -m pip install -e "packages/social-publish-core[dev]"
+python -m pip install -e "packages/social-publish-core[dev]" \
+  -e "packages/value-audit-core[dev]"
 pytest
 ruff check .
 ruff format --check .
 pyright
+python -m build packages/social-publish-core
+python -m build packages/value-audit-core
 ```
 
 Add tests for every behavior change. Keep core contracts platform-neutral and

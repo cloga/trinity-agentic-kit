@@ -6,7 +6,13 @@ pythonpath = ["."]
 [tool.ruff]
 target-version = "py310"
 line-length = 88
-src = ["packages/social-publish-core/src", "scripts", "tests"]
+src = [
+  "packages/social-publish-core/src",
+  "packages/value-audit-core/src",
+  "skills/lynch-research",
+  "scripts",
+  "tests",
+]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
@@ -19,6 +25,8 @@ pythonVersion = "3.10"
 typeCheckingMode = "strict"
 include = [
   "packages/social-publish-core/src",
+  "packages/value-audit-core/src",
+  "skills/lynch-research/validate.py",
   "tests",
   "examples",
   "scripts",

@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Enforce neutral branch naming
+      - name: Enforce account-consistent branch naming
         if: github.event_name == 'pull_request'
         run: python scripts/validate_branch_name.py --branch "${{ github.head_ref }}"
 
@@ -29,9 +29,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
       - run: python -m pip install --upgrade pip
-      - run: python -m pip install -e "packages/social-publish-core[dev]"
+      - run: python -m pip install -e "packages/social-publish-core[dev]" -e "packages/value-audit-core[dev]"
       - run: ruff check .
       - run: ruff format --check .
       - run: pyright
-      - run: python -m pytest --cov=trinity_agentic_kit.social_publish --cov-report=term-missing --cov-fail-under=90
+      - run: python -m pytest --cov=trinity_agentic_kit.social_publish --cov=trinity_agentic_kit.value_audit --cov-report=term-missing --cov-fail-under=90
       - run: python -m build packages/social-publish-core
+      - run: python -m build packages/value-audit-core

@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lynch Research Decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "company_id",
+    "verified_category",
+    "ranking_framework",
+    "verdict",
+    "confidence",
+    "thesis",
+    "evidence",
+    "vetoes",
+    "warnings",
+    "data_gaps",
+    "follow_up_checks"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "company_id": { "type": "string", "minLength": 1 },
+    "verified_category": {
+      "enum": [
+        "slow_grower",
+        "stalwart",
+        "fast_grower",
+        "cyclical",
+        "asset_play",
+        "turnaround",
+        "unverified"
+      ]
+    },
+    "ranking_framework": {
+      "enum": [
+        "slow_grower",
+        "stalwart",
+        "fast_grower",
+        "cyclical",
+        "asset_play",
+        "turnaround",
+        "financial_sector",
+        "unverified"
+      ]
+    },
+    "verdict": {
+      "enum": [
+        "lynch_style_candidate",
+        "watchlist",
+        "wrong_framework",
+        "reject",
+        "data_gap"
+      ]
+    },
+    "confidence": { "enum": ["high", "medium", "low"] },
+    "thesis": { "type": "string", "minLength": 1 },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claim", "source_ids"],
+        "properties": {
+          "claim": { "type": "string", "minLength": 1 },
+          "source_ids": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "vetoes": { "$ref": "#/$defs/stringArray" },
+    "warnings": { "$ref": "#/$defs/stringArray" },
+    "data_gaps": { "$ref": "#/$defs/stringArray" },
+    "follow_up_checks": { "$ref": "#/$defs/stringArray" }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
