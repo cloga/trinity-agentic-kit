@@ -404,7 +404,7 @@ class PlaywrightBrowserDriver:
     ) -> _T:
         try:
             return await asyncio.wait_for(awaitable, timeout_seconds)
-        except (TimeoutError, PlaywrightTimeoutError) as exc:
+        except (asyncio.TimeoutError, PlaywrightTimeoutError) as exc:
             raise AdapterTimeoutError(
                 f"{operation} timed out",
                 code="browser_timeout",

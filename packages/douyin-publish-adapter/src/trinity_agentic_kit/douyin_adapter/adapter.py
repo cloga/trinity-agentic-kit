@@ -171,7 +171,7 @@ class DouyinPublisherAdapter:
     ) -> _T:
         try:
             return await asyncio.wait_for(awaitable, timeout=timeout_seconds)
-        except TimeoutError as exc:
+        except asyncio.TimeoutError as exc:
             raise AdapterTimeoutError(
                 f"{operation} exceeded {timeout_seconds:g} seconds",
                 code="operation_timeout",
