@@ -74,13 +74,24 @@ investment advice or recommendations. This project is not affiliated with or
 endorsed by the people or organizations whose names identify the analytical
 styles.
 
+## Douyin Publish Adapter
+
+[`douyin-publish-adapter`](packages/douyin-publish-adapter) is an unofficial,
+user-operated integration package. It provides externally configured selector
+profiles, visible-browser Playwright support, app-data session storage, offline
+fakes, bounded operations, and structured diagnostics. Playwright and keyring
+are optional extras.
+
+The package ships no production selectors, URLs, authenticated state, or media.
+Review its [terms and account-risk warning](packages/douyin-publish-adapter/README.md)
+before use.
+
 ## Explicit exclusions
 
-This repository does **not** contain platform web adapters, site selectors,
-browser automation, cookies, private messages, account details, credentials,
-anti-detection behavior, production databases, media, or private strategy and
-runtime configuration. Integrators own platform-specific adapters and must keep
-secrets and authenticated runtime state outside the contracts and state stores.
+This repository contains no production site selectors, authenticated state,
+private messages, account details, credentials, stealth or challenge-bypass
+behavior, production databases, real media, or private strategy and runtime
+configuration.
 
 ## License
 
