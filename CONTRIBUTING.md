@@ -38,7 +38,7 @@ enforces this rule.
 
 ## Cross-repository ownership
 
-`components/ownership.json` is the canonical machine-readable map between this
+`components/cross_repo_routing/ownership.json` is the canonical machine-readable map between this
 repository and private consumers. Run `scripts/plan_cross_repo_change.py` before
 starting work that touches a declared component. Public-first plans must land
 and release the canonical component before a dependent consumer PR updates its

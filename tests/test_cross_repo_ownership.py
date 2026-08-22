@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from scripts.plan_cross_repo_change import load_manifest, plan_change
+from components.cross_repo_routing import load_manifest, plan_change
 
 
 def test_public_contract_change_creates_dependent_private_task() -> None:
