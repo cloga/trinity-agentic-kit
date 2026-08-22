@@ -33,6 +33,8 @@ class SessionProtector(Protocol):
 class BrowserDriver(Protocol):
     """Browser operations used by the adapter."""
 
+    async def close(self) -> None: ...
+
     async def login_interactively(
         self,
         profile: SelectorProfile,

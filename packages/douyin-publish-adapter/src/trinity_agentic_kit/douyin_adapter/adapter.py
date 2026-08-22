@@ -136,7 +136,15 @@ class DouyinPublisherAdapter:
         return self._verification_result(reference, result)
 
     async def _restore_session(self, *, operation: str) -> None:
-        session = self._session_store.load()
+        try:
+            session = self._session_store.load()
+        except (OSError, RuntimeError, ValueError) as exc:
+            raise SessionRequiredError(
+                f"Cannot load the saved session: {exc}",
+                code="session_store_error",
+                operation=operation,
+                requires_manual_intervention=True,
+            ) from exc
         if session is None:
             raise SessionRequiredError(
                 "Run interactive login before publishing",

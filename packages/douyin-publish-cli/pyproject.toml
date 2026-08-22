@@ -1,0 +1,57 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "trinity-agentic-kit-douyin"
+version = "0.1.0"
+description = "Operator-safe command line workflow for Douyin publication"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "cloga contributors" }]
+keywords = ["agents", "cli", "douyin", "publishing"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Typing :: Typed",
+]
+dependencies = [
+  "trinity-agentic-kit-social-publish>=0.1.0,<0.2",
+  "trinity-agentic-kit-douyin-adapter>=0.1.0,<0.2",
+]
+
+[project.optional-dependencies]
+playwright = [
+  "trinity-agentic-kit-douyin-adapter[playwright]>=0.1.0,<0.2",
+]
+keyring = [
+  "trinity-agentic-kit-douyin-adapter[keyring]>=0.1.0,<0.2",
+]
+dev = [
+  "build>=1.2",
+  "pyright>=1.1.400",
+  "pytest>=8.3",
+  "pytest-cov>=6.0",
+  "ruff>=0.11",
+]
+
+[project.scripts]
+douyin-publish = "trinity_agentic_kit.douyin_cli.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/cloga/trinity-agentic-kit"
+Issues = "https://github.com/cloga/trinity-agentic-kit/issues"
+Source = "https://github.com/cloga/trinity-agentic-kit"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/trinity_agentic_kit"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "README.md", "pyproject.toml"]

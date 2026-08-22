@@ -8,7 +8,8 @@ Python 3.10 or newer is required.
 python -m pip install -e "packages/social-publish-core[dev]" \
   -e "packages/value-audit-core[dev]" \
   -e "packages/value-investing-explainer[dev]" \
-  -e "packages/douyin-publish-adapter[dev]"
+  -e "packages/douyin-publish-adapter[dev]" \
+  -e "packages/douyin-publish-cli[dev]"
 pytest
 ruff check .
 ruff format --check .
@@ -17,6 +18,7 @@ python -m build packages/social-publish-core
 python -m build packages/value-audit-core
 python -m build packages/value-investing-explainer
 python -m build packages/douyin-publish-adapter
+python -m build packages/douyin-publish-cli
 ```
 
 Add tests for every behavior change. Keep core contracts platform-neutral and

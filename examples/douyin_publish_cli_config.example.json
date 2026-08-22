@@ -1,0 +1,20 @@
+{
+  "browser_name": "chromium",
+  "use_keyring": false,
+  "selector_profile": {
+    "name": "operator-maintained",
+    "version": "replace-with-reviewed-version",
+    "schema_version": 1,
+    "login_url": "CONFIGURE_OUTSIDE_THIS_REPOSITORY",
+    "publish_url": "CONFIGURE_OUTSIDE_THIS_REPOSITORY",
+    "verification_url_template": "CONFIGURE_WITH_{platform_reference}",
+    "selectors": {
+      "authenticated": "CONFIGURE",
+      "composer_ready": "CONFIGURE",
+      "description_input": "CONFIGURE",
+      "submit_button": "CONFIGURE",
+      "submission_reference": "CONFIGURE",
+      "video_input": "CONFIGURE"
+    }
+  }
+}

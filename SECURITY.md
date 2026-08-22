@@ -24,3 +24,8 @@ not in an agent-callable tool. Grants must remain short-lived and request-bound.
 
 Asset references and metadata are untrusted integration inputs. Adapters must
 validate them before accessing files, URLs, or external services.
+
+The `douyin-publish` CLI stores workflow state and opaque local security
+material under per-user OS app-data. Do not copy these files into a repository,
+attach them to issues, or include them in logs. Approval grant files are
+short-lived and single-use; delete unconsumed files when abandoning a request.

@@ -35,3 +35,20 @@ bypass, private messaging, or authenticated state to the Skill.
 
 Use `FakeBrowserDriver` for offline tests. Real-site tests require an explicit
 manual test plan outside this repository.
+
+## CLI boundary
+
+When using `douyin-publish`, preserve the same phases as separate commands:
+
+`login` -> `prepare` -> `approve` -> `execute` -> `verify`
+
+- `approve` must display the exact request digest, title, asset reference, and
+  platform, then receive a direct operator confirmation from an interactive
+  terminal.
+- `execute` must receive an explicit pre-issued grant file. Never add an
+  automatic confirmation flag or print grant contents.
+- `verify` is lookup-only. Never replace it with another execute attempt.
+- Use `status` for inspection and `cancel` only through the core state machine.
+
+CLI state, session material, and approval keys belong under OS app-data, never
+the current working directory.
