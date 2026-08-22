@@ -15,7 +15,8 @@ platform-neutral publication orchestration for Python 3.10+:
 
 ```bash
 python -m pip install -e "packages/social-publish-core[dev]" \
-  -e "packages/value-audit-core[dev]"
+  -e "packages/value-audit-core[dev]" \
+  -e "packages/value-investing-explainer[dev]"
 pytest
 ruff check .
 pyright
@@ -37,6 +38,21 @@ warnings, data gaps, and provenance.
 The package has no network, database, credential, token, or vendor-adapter
 dependency. See the [`lynch-research` Skill](skills/lynch-research/SKILL.md) for
 a public-output-only research workflow.
+
+## Value Investing Explainer
+
+[`value-investing-explainer`](packages/value-investing-explainer) provides
+versioned topic and explanation contracts plus deterministic
+topic -> evidence -> explanation -> scenes -> QA orchestration. It supports
+caller-supplied concept evidence and can adapt public `value-audit-core`
+results without taking a package dependency.
+
+Semantic generation is an explicit optional port; the package includes a
+no-network deterministic fake for tests. Every claim and scene must cite known
+evidence IDs. Recommendation language, guaranteed returns, long verbatim reuse,
+and missing non-advice/non-affiliation disclosures fail QA. See the
+[`value-investing-explainer` Skill](skills/value-investing-explainer/SKILL.md)
+and [basic example](examples/value_investing_explainer_basic.py).
 
 All model thresholds are documented, overridable implementation assumptions,
 not official or universal master rules. Outputs are research calculations, not
