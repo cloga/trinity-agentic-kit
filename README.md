@@ -14,7 +14,8 @@ platform-neutral publication orchestration for Python 3.10+:
 - a no-network `FakePublisherAdapter` for tests and local integration work.
 
 ```bash
-python -m pip install -e "packages/social-publish-core[dev]"
+python -m pip install -e "packages/social-publish-core[dev]" \
+  -e "packages/value-audit-core[dev]"
 pytest
 ruff check .
 pyright
@@ -23,6 +24,25 @@ pyright
 See the [package README](packages/social-publish-core/README.md), the
 [`social-publish` Skill](skills/social-publish/SKILL.md), and the
 [basic example](examples/social_publish_basic.py).
+
+## Value Audit Core
+
+[`value-audit-core`](packages/value-audit-core) provides versioned,
+provider-neutral financial payload and unified result contracts plus
+deterministic Graham-, Buffett-, Greenwald-, and Lynch-style models. It
+preserves point-in-time report visibility, restates historical EPS against the
+latest visible share count, makes units explicit, and emits assumptions,
+warnings, data gaps, and provenance.
+
+The package has no network, database, credential, token, or vendor-adapter
+dependency. See the [`lynch-research` Skill](skills/lynch-research/SKILL.md) for
+a public-output-only research workflow.
+
+All model thresholds are documented, overridable implementation assumptions,
+not official or universal master rules. Outputs are research calculations, not
+investment advice or recommendations. This project is not affiliated with or
+endorsed by the people or organizations whose names identify the analytical
+styles.
 
 ## Explicit exclusions
 

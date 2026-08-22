@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cloga/trinity-agentic-kit/schemas/value-audit-result-v1.json",
+  "title": "Unified Value Audit Result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "package_version",
+    "input_schema_version",
+    "company_id",
+    "company_name",
+    "as_of_date",
+    "currency",
+    "monetary_unit",
+    "models",
+    "assumptions",
+    "warnings",
+    "data_gaps",
+    "provenance",
+    "disclaimer"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "package_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "input_schema_version": { "const": "1.0" },
+    "company_id": { "type": "string", "minLength": 1 },
+    "company_name": { "type": "string", "minLength": 1 },
+    "as_of_date": { "type": "string", "format": "date" },
+    "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+    "monetary_unit": { "const": "ones" },
+    "models": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["graham", "buffett", "greenwald", "lynch"],
+      "properties": {
+        "graham": { "$ref": "#/$defs/modelResult" },
+        "buffett": { "$ref": "#/$defs/modelResult" },
+        "greenwald": { "$ref": "#/$defs/modelResult" },
+        "lynch": { "$ref": "#/$defs/modelResult" }
+      }
+    },
+    "assumptions": {
+      "type": "object",
+      "additionalProperties": { "type": ["number", "integer"] }
+    },
+    "warnings": { "$ref": "#/$defs/stringArray" },
+    "data_gaps": { "$ref": "#/$defs/stringArray" },
+    "provenance": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_id", "source_type", "as_of_date", "label", "uri"]
+      }
+    },
+    "disclaimer": { "type": "string", "minLength": 1 }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "modelResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model",
+        "status",
+        "metrics",
+        "assumption_ids",
+        "warnings",
+        "data_gaps",
+        "provenance_ids"
+      ],
+      "properties": {
+        "model": { "type": "string" },
+        "status": { "enum": ["complete", "partial", "unavailable"] },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": {
+            "type": ["string", "number", "integer", "boolean", "null"]
+          }
+        },
+        "assumption_ids": { "$ref": "#/$defs/stringArray" },
+        "warnings": { "$ref": "#/$defs/stringArray" },
+        "data_gaps": { "$ref": "#/$defs/stringArray" },
+        "provenance_ids": { "$ref": "#/$defs/stringArray" }
+      }
+    }
+  }
+}

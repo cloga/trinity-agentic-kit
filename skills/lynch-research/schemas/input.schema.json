@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lynch Research Input",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "package_version",
+    "company_id",
+    "as_of_date",
+    "models",
+    "assumptions",
+    "warnings",
+    "data_gaps",
+    "provenance",
+    "disclaimer"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "package_version": { "type": "string" },
+    "company_id": { "type": "string", "minLength": 1 },
+    "as_of_date": { "type": "string", "format": "date" },
+    "models": {
+      "type": "object",
+      "required": ["graham", "buffett", "greenwald", "lynch"],
+      "properties": {
+        "lynch": {
+          "type": "object",
+          "required": [
+            "status",
+            "metrics",
+            "warnings",
+            "data_gaps",
+            "provenance_ids"
+          ]
+        }
+      }
+    },
+    "assumptions": { "type": "object" },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "data_gaps": { "type": "array", "items": { "type": "string" } },
+    "provenance": { "type": "array" },
+    "disclaimer": { "type": "string", "minLength": 1 }
+  }
+}
