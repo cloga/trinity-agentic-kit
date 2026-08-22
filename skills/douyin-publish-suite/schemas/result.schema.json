@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cloga/trinity-agentic-kit/schemas/douyin-publish-suite-result-v1.json",
+  "title": "DouyinPublishSuiteResult",
+  "type": "object",
+  "properties": {
+    "ok": {"type": "boolean"},
+    "command": {
+      "enum": [
+        "login",
+        "prepare",
+        "approve",
+        "execute",
+        "verify",
+        "status",
+        "cancel"
+      ]
+    },
+    "record": {
+      "type": "object",
+      "properties": {
+        "request_id": {"type": "string", "minLength": 1},
+        "state": {
+          "enum": [
+            "preparing",
+            "awaiting_approval",
+            "approved",
+            "executing",
+            "submitted",
+            "verifying",
+            "published",
+            "verification_pending",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "request_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "title": {"type": "string"},
+        "asset_ref": {"type": "string"},
+        "platform": {"const": "douyin"},
+        "media_type": {"enum": ["video", "image", "text"]},
+        "platform_reference": {"type": "string"},
+        "published_url": {"type": "string"},
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {"type": "string"},
+            "message": {"type": "string"}
+          },
+          "required": ["code", "message"],
+          "additionalProperties": false
+        },
+        "revision": {"type": "integer", "minimum": 1}
+      },
+      "required": [
+        "request_id",
+        "state",
+        "request_digest",
+        "title",
+        "asset_ref",
+        "platform",
+        "media_type",
+        "platform_reference",
+        "published_url",
+        "error",
+        "revision"
+      ],
+      "additionalProperties": false
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "code": {"type": "string", "minLength": 1},
+        "message": {"type": "string"},
+        "details": {"type": "object"}
+      },
+      "required": ["code", "message", "details"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["ok"],
+  "allOf": [
+    {
+      "if": {"properties": {"ok": {"const": true}}},
+      "then": {"required": ["command"]},
+      "else": {"required": ["error"]}
+    }
+  ],
+  "additionalProperties": true
+}

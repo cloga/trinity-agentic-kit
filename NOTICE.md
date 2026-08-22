@@ -17,3 +17,7 @@ The optional Tushare adapter is not affiliated with or endorsed by Tushare.
 Tushare data access and redistribution remain subject to Tushare's separate
 terms, permissions, and licensing; this product's Apache-2.0 license grants no
 rights to provider data.
+
+The Douyin Publish Suite is an unofficial interoperability guide and is not
+affiliated with or endorsed by Douyin or ByteDance. Douyin and ByteDance names
+and marks remain the property of their respective owners.

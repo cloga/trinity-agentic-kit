@@ -19,11 +19,16 @@ python -m build packages/value-audit-core
 python -m build packages/value-investing-explainer
 python -m build packages/douyin-publish-adapter
 python -m build packages/douyin-publish-cli
+python scripts/validate_douyin_skill.py
 ```
 
 Add tests for every behavior change. Keep core contracts platform-neutral and
 deterministic. Adapter tests must use fake drivers and require no network,
 authenticated state, production database, or media files.
+
+Douyin-specific guidance belongs only in `skills/douyin-publish-suite`.
+Run the dependency-free Skill validator whenever its router, references,
+schemas, examples, README, or manifest changes.
 
 ## Pull requests
 

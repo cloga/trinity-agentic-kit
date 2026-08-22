@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "request_id": "example-video-1",
+  "platform": "douyin",
+  "media_type": "video",
+  "asset_ref": "asset://example-video",
+  "image_refs": [],
+  "title": "Example video title",
+  "description": "Offline contract example only.",
+  "idempotency_key": "example-video-key-1"
+}

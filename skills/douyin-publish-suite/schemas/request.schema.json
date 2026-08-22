@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cloga/trinity-agentic-kit/schemas/douyin-publish-suite-request-v1.json",
+  "title": "DouyinPublishSuiteRequest",
+  "type": "object",
+  "properties": {
+    "schema_version": {"const": 1},
+    "request_id": {"type": "string", "minLength": 1},
+    "platform": {"const": "douyin"},
+    "media_type": {"enum": ["video", "image", "text"]},
+    "asset_ref": {"type": "string", "minLength": 1},
+    "image_refs": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "title": {"type": "string"},
+    "description": {"type": "string"},
+    "idempotency_key": {"type": "string", "minLength": 1}
+  },
+  "required": [
+    "schema_version",
+    "request_id",
+    "platform",
+    "media_type",
+    "asset_ref",
+    "image_refs",
+    "title",
+    "description",
+    "idempotency_key"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {"media_type": {"const": "image"}}
+      },
+      "then": {
+        "properties": {"image_refs": {"minItems": 1}}
+      },
+      "else": {
+        "properties": {"image_refs": {"maxItems": 0}}
+      }
+    }
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,29 @@
+{
+  "requests": [
+    {
+      "schema_version": 1,
+      "request_id": "example-image-1",
+      "platform": "douyin",
+      "media_type": "image",
+      "asset_ref": "asset://example-image-set",
+      "image_refs": [
+        "asset://example-image-a",
+        "asset://example-image-b"
+      ],
+      "title": "Example image title",
+      "description": "Offline contract example only.",
+      "idempotency_key": "example-image-key-1"
+    },
+    {
+      "schema_version": 1,
+      "request_id": "example-text-1",
+      "platform": "douyin",
+      "media_type": "text",
+      "asset_ref": "asset://example-text",
+      "image_refs": [],
+      "title": "Example text title",
+      "description": "Offline contract example only.",
+      "idempotency_key": "example-text-key-1"
+    }
+  ]
+}
