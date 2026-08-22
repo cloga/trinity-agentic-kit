@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cloga/trinity-agentic-kit/schemas/company-financial-payload-v1.json",
+  "title": "Company Financial Payload v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "company_id",
+    "company_name",
+    "industry",
+    "as_of_date",
+    "currency",
+    "monetary_unit",
+    "share_unit",
+    "market",
+    "periods",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "company_id": { "type": "string", "minLength": 1 },
+    "company_name": { "type": "string", "minLength": 1 },
+    "industry": { "type": "string", "minLength": 1 },
+    "is_financial": { "type": "boolean", "default": false },
+    "as_of_date": { "type": "string", "format": "date" },
+    "currency": { "type": "string", "pattern": "^[A-Za-z]{3}$" },
+    "monetary_unit": { "enum": ["ones", "thousands", "millions"] },
+    "share_unit": { "enum": ["shares", "thousands", "millions"] },
+    "market": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date", "price", "shares_outstanding", "source_ids"],
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "price": { "type": "number", "exclusiveMinimum": 0 },
+        "shares_outstanding": { "type": "number", "exclusiveMinimum": 0 },
+        "dividend_per_share_ttm": { "type": "number", "minimum": 0 },
+        "source_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    },
+    "periods": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "period_end",
+          "visible_at",
+          "period_type",
+          "months",
+          "values",
+          "source_ids"
+        ],
+        "properties": {
+          "period_end": { "type": "string", "format": "date" },
+          "visible_at": { "type": "string", "format": "date" },
+          "period_type": { "enum": ["annual", "interim"] },
+          "months": { "type": "integer", "minimum": 1, "maximum": 12 },
+          "values": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": { "type": "number" }
+          },
+          "source_ids": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source_id", "source_type", "as_of_date"],
+        "properties": {
+          "source_id": { "type": "string", "minLength": 1 },
+          "source_type": { "type": "string", "minLength": 1 },
+          "as_of_date": { "type": "string", "format": "date" },
+          "label": { "type": "string" },
+          "uri": { "type": "string" }
+        }
+      }
+    }
+  }
+}
