@@ -9,6 +9,14 @@ permissions:
   contents: read
 
 jobs:
+  branch-policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enforce neutral branch naming
+        if: github.event_name == 'pull_request'
+        run: python scripts/validate_branch_name.py --branch "${{ github.head_ref }}"
+
   quality:
     runs-on: ubuntu-latest
     strategy:

@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "expected_account": "cloga",
+  "forbidden_fragments": [
+    "lochen-microsoft",
+    "lochen_microsoft"
+  ]
+}
