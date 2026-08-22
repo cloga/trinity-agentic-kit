@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "name": "douyin-publish-suite",
+  "requires": {
+    "trinity-agentic-kit-social-publish": ">=0.1.0,<0.2",
+    "trinity-agentic-kit-douyin-adapter": ">=0.1.0,<0.2",
+    "trinity-agentic-kit-douyin": ">=0.1.0,<0.2"
+  },
+  "optional_extras": [
+    "playwright",
+    "keyring"
+  ],
+  "command": "douyin-publish"
+}

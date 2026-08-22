@@ -93,6 +93,12 @@ before use.
 requires interactive approval or an explicit pre-issued grant file, emits
 structured JSON, and keeps execute and verify as distinct commands.
 
+Use the progressive
+[`douyin-publish-suite`](skills/douyin-publish-suite/SKILL.md) as the single
+Douyin-specific Skill entry point. The generic
+[`social-publish`](skills/social-publish/SKILL.md) Skill remains platform
+neutral.
+
 ## Explicit exclusions
 
 This repository contains no production site selectors, authenticated state,
