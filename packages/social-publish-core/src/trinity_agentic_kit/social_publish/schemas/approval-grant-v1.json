@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cloga/trinity-agentic-kit/schemas/approval-grant-v1.json",
+  "title": "ApprovalGrant",
+  "type": "object",
+  "properties": {
+    "grant_id": {"type": "string", "minLength": 1},
+    "request_id": {"type": "string", "minLength": 1},
+    "platform": {"type": "string", "minLength": 1},
+    "idempotency_key": {"type": "string", "minLength": 1},
+    "request_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "issued_at": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": "string", "format": "date-time"},
+    "issuer": {"type": "string", "minLength": 1},
+    "schema_version": {"const": 1}
+  },
+  "required": [
+    "grant_id",
+    "request_id",
+    "platform",
+    "idempotency_key",
+    "request_digest",
+    "capabilities",
+    "issued_at",
+    "expires_at",
+    "issuer",
+    "schema_version"
+  ],
+  "additionalProperties": false
+}
