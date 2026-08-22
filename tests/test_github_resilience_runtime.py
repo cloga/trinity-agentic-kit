@@ -196,6 +196,11 @@ def test_cli_success_dotenv_and_structured_error(
     )
     monkeypatch.delenv("GITHUB_TOKEN", raising=False)
     monkeypatch.setattr(cli, "ResilientGitTransport", FakeTransport)
+    monkeypatch.setattr(
+        cli,
+        "_git_state_root",
+        lambda cwd: tmp_path / "git-state",
+    )
     arguments = [
         "--repo",
         "cloga/repo",
@@ -227,3 +232,29 @@ def test_cli_success_dotenv_and_structured_error(
         FakeTransport.error = None
     error = json.loads(capsys.readouterr().err)
     assert error["failure_kind"] == "permission"
+
+
+def test_git_state_root_supports_worktrees_and_rejects_non_repo(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.setattr(
+        "trinity_agentic_kit.github_resilience.cli.subprocess.run",
+        lambda *args, **kwargs: SimpleNamespace(
+            returncode=0,
+            stdout=str(tmp_path / "common.git" / "worktrees" / "one"),
+            stderr="",
+        ),
+    )
+    assert cli._git_state_root(tmp_path).is_absolute()
+
+    monkeypatch.setattr(
+        "trinity_agentic_kit.github_resilience.cli.subprocess.run",
+        lambda *args, **kwargs: SimpleNamespace(
+            returncode=128,
+            stdout="",
+            stderr="not a repository",
+        ),
+    )
+    with pytest.raises(GitHubTransportError, match="not a Git"):
+        cli._git_state_root(tmp_path)

@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -27,6 +28,30 @@ def _load_dotenv_value(path: Path, name: str) -> str:
     return ""
 
 
+def _git_state_root(cwd: Path) -> Path:
+    completed = subprocess.run(
+        [
+            "git",
+            "rev-parse",
+            "--path-format=absolute",
+            "--git-path",
+            "agentic-network",
+        ],
+        cwd=cwd,
+        check=False,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    if completed.returncode != 0 or not completed.stdout.strip():
+        raise GitHubTransportError(
+            "cwd is not a Git working tree",
+            exit_code=10,
+        )
+    return Path(completed.stdout.strip()).resolve()
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run resilient GitHub Git operations")
     parser.add_argument("--version", action="version", version=PACKAGE_VERSION)
@@ -46,7 +71,20 @@ def main(argv: list[str] | None = None) -> int:
     token = str(os.getenv(args.token_env) or "")
     if not token and args.dotenv is not None:
         token = _load_dotenv_value(args.dotenv, args.token_env)
-    state_root = args.cwd / ".git" / "agentic-network"
+    try:
+        state_root = _git_state_root(args.cwd.resolve())
+    except GitHubTransportError as exc:
+        print(
+            json.dumps(
+                {
+                    "ok": False,
+                    "failure_kind": exc.kind.value,
+                    "error": str(exc),
+                }
+            ),
+            file=sys.stderr,
+        )
+        return exc.exit_code
     journal = args.journal or state_root / "last-operation.json"
     lock = args.lock or state_root / "operation.lock"
     transport = ResilientGitTransport(
