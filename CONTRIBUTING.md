@@ -35,3 +35,11 @@ the branch. This repository currently publishes with `cloga`, so branches use
 account, update `expected_account` in `.github/branch-policy.json` in the same
 reviewed change. Never reuse an employer or unrelated account prefix. CI
 enforces this rule.
+
+## Cross-repository ownership
+
+`components/ownership.json` is the canonical machine-readable map between this
+repository and private consumers. Run `scripts/plan_cross_repo_change.py` before
+starting work that touches a declared component. Public-first plans must land
+and release the canonical component before a dependent consumer PR updates its
+version lock and adapters.

@@ -33,6 +33,7 @@ jobs:
       - run: ruff check .
       - run: ruff format --check .
       - run: pyright
+      - run: python scripts/plan_cross_repo_change.py --repository cloga/trinity-agentic-kit --path packages/value-audit-core/README.md
       - run: python -m pytest --cov=trinity_agentic_kit.social_publish --cov=trinity_agentic_kit.value_audit --cov=trinity_agentic_kit.value_audit_tushare --cov=trinity_agentic_kit.value_explainer --cov=trinity_agentic_kit.douyin_adapter --cov-report=term-missing --cov-fail-under=90
       - run: python -m build packages/social-publish-core
       - run: python -m build packages/value-audit-core
