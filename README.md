@@ -86,6 +86,13 @@ The package ships no production selectors, URLs, authenticated state, or media.
 Review its [terms and account-risk warning](packages/douyin-publish-adapter/README.md)
 before use.
 
+## Douyin Publish CLI
+
+[`douyin-publish-cli`](packages/douyin-publish-cli) adds the
+`douyin-publish` operator command. It persists core state under OS app-data,
+requires interactive approval or an explicit pre-issued grant file, emits
+structured JSON, and keeps execute and verify as distinct commands.
+
 ## Explicit exclusions
 
 This repository contains no production site selectors, authenticated state,

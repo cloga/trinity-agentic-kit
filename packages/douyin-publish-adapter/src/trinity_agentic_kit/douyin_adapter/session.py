@@ -49,11 +49,18 @@ class AppDataSessionStore:
         *,
         app_name: str = _DEFAULT_APP_NAME,
         filename: str = "douyin-session.bin",
+        directory: Path | None = None,
         protector: SessionProtector | None = None,
     ) -> None:
         if not filename or Path(filename).name != filename:
             raise ValueError("filename must be a single non-empty path component")
-        self._directory = user_app_data_dir(app_name)
+        if directory is not None and not directory.is_absolute():
+            raise ValueError("directory must be absolute")
+        self._directory = (
+            directory.expanduser().resolve()
+            if directory is not None
+            else user_app_data_dir(app_name)
+        )
         self._path = self._directory / filename
         self._protector = protector
 

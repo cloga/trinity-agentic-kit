@@ -35,6 +35,9 @@ class FakeBrowserDriver:
         )
         self.calls: list[tuple[str, object]] = []
 
+    async def close(self) -> None:
+        self.calls.append(("close", None))
+
     async def login_interactively(
         self,
         profile: SelectorProfile,
