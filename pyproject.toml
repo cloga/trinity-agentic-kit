@@ -8,6 +8,7 @@ target-version = "py310"
 line-length = 88
 src = [
   "components",
+  "packages/github-resilient-transport/src",
   "packages/social-publish-core/src",
   "packages/value-audit-core/src",
   "packages/value-audit-tushare/src",
@@ -30,6 +31,7 @@ pythonVersion = "3.10"
 typeCheckingMode = "strict"
 include = [
   "components",
+  "packages/github-resilient-transport/src",
   "packages/social-publish-core/src",
   "packages/value-audit-core/src",
   "packages/value-audit-tushare/src",

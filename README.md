@@ -4,6 +4,13 @@ Reusable, safe-by-default agent Skills and deterministic domain components.
 
 ## Social Publish Core
 
+## GitHub Resilient Transport
+
+[`github-resilient-transport`](packages/github-resilient-transport) provides
+account-aware GitHub permission preflight, bounded transient retries,
+secret-safe child-process authentication, operation locking, and redacted
+recovery journals for autonomous Git fetch/push workflows.
+
 The first package, [`social-publish-core`](packages/social-publish-core), provides
 platform-neutral publication orchestration for Python 3.10+:
 
