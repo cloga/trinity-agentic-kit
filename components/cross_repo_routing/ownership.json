@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "canonical_repository": "cloga/trinity-agentic-kit",
+  "consumer_repositories": [
+    "cloga/Trinity-Alpha"
+  ],
+  "components": [
+    {
+      "name": "social-publish",
+      "public_paths": [
+        "packages/social-publish-core/**",
+        "skills/social-publish/**"
+      ],
+      "private_paths": [
+        "src/services/social_publish_*.py"
+      ],
+      "private_change_policy": "public-first",
+      "requires_private_consumer_update": true
+    },
+    {
+      "name": "value-audit",
+      "public_paths": [
+        "packages/value-audit-core/**",
+        "skills/lynch-research/**"
+      ],
+      "private_paths": [
+        "src/models/**",
+        "src/services/lynch_agent_*.py"
+      ],
+      "private_change_policy": "public-first",
+      "requires_private_consumer_update": true
+    },
+    {
+      "name": "value-audit-tushare",
+      "public_paths": [
+        "packages/value-audit-tushare/**"
+      ],
+      "private_paths": [
+        "src/data_fetcher.py",
+        "src/data_enricher.py",
+        "src/financial_report_utils.py"
+      ],
+      "private_change_policy": "public-first",
+      "requires_private_consumer_update": true
+    },
+    {
+      "name": "value-investing-explainer",
+      "public_paths": [
+        "packages/value-investing-explainer/**",
+        "skills/value-investing-explainer/**"
+      ],
+      "private_paths": [
+        "src/services/value_investing_short_*.py",
+        "scripts/run_daily_value_investing_short.py"
+      ],
+      "private_change_policy": "public-first",
+      "requires_private_consumer_update": true
+    },
+    {
+      "name": "douyin-publish-suite",
+      "public_paths": [
+        "packages/douyin-publish-adapter/**",
+        "packages/douyin-publish-cli/**",
+        "skills/douyin-publish-suite/**"
+      ],
+      "private_paths": [
+        "src/services/douyin_*.py",
+        "src/mcp_douyin_server.py",
+        "scripts/douyin_publisher.py"
+      ],
+      "private_change_policy": "private-only",
+      "requires_private_consumer_update": true
+    }
+  ]
+}

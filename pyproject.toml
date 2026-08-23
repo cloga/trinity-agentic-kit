@@ -7,6 +7,7 @@ testpaths = ["tests"]
 target-version = "py310"
 line-length = 88
 src = [
+  "components",
   "packages/social-publish-core/src",
   "packages/value-audit-core/src",
   "packages/value-audit-tushare/src",
@@ -28,6 +29,7 @@ quote-style = "double"
 pythonVersion = "3.10"
 typeCheckingMode = "strict"
 include = [
+  "components",
   "packages/social-publish-core/src",
   "packages/value-audit-core/src",
   "packages/value-audit-tushare/src",
