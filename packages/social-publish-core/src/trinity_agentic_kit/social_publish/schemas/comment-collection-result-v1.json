@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cloga/trinity-agentic-kit/schemas/comment-collection-result-v1.json",
+  "title": "CommentCollectionResult",
+  "type": "object",
+  "properties": {
+    "request_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["complete", "partial", "failed"]},
+    "comments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "comment_id": {"type": "string", "minLength": 1},
+          "text": {"type": ["string", "null"]},
+          "created_at": {"type": ["string", "null"]},
+          "author_reference": {"type": ["string", "null"]}
+        },
+        "required": [
+          "comment_id",
+          "text",
+          "created_at",
+          "author_reference"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "next_cursor": {"type": ["string", "null"]},
+    "pages_fetched": {"type": "integer", "minimum": 0},
+    "retention_until": {"type": "string", "format": "date-time"},
+    "error_code": {"type": "string"},
+    "error_message": {"type": "string"},
+    "retryable": {"type": "boolean"},
+    "schema_version": {"const": 1}
+  },
+  "required": [
+    "request_id",
+    "status",
+    "comments",
+    "next_cursor",
+    "pages_fetched",
+    "retention_until",
+    "error_code",
+    "error_message",
+    "retryable",
+    "schema_version"
+  ],
+  "additionalProperties": false
+}

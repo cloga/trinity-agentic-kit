@@ -19,6 +19,8 @@ platform-neutral publication orchestration for Python 3.10+:
 - request-bound, capability-scoped, short-lived HMAC approval grants;
 - in-memory and SQLite state stores with optimistic concurrency;
 - a no-network `FakePublisherAdapter` for tests and local integration work.
+- provider-neutral, consent-scoped comment collection with bounded pagination,
+  retries, deduplication, and explicit partial/failure outcomes.
 
 ```bash
 python -m pip install -e "packages/social-publish-core[dev]" \
