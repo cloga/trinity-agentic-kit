@@ -34,6 +34,8 @@ def _load_schema(filename: str) -> JsonObject:
 SOCIAL_PUBLISH_REQUEST_SCHEMA = _load_schema("social-publish-request-v1.json")
 PLATFORM_PUBLISH_RESULT_SCHEMA = _load_schema("platform-publish-result-v1.json")
 APPROVAL_GRANT_SCHEMA = _load_schema("approval-grant-v1.json")
+COMMENT_COLLECTION_REQUEST_SCHEMA = _load_schema("comment-collection-request-v1.json")
+COMMENT_COLLECTION_RESULT_SCHEMA = _load_schema("comment-collection-result-v1.json")
 
 
 class SocialPublishError(RuntimeError):

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cloga/trinity-agentic-kit/schemas/comment-collection-request-v1.json",
+  "title": "CommentCollectionRequest",
+  "type": "object",
+  "properties": {
+    "request_id": {"type": "string", "minLength": 1},
+    "platform": {"type": "string", "minLength": 1},
+    "resource_ref": {"type": "string", "minLength": 1},
+    "idempotency_key": {"type": "string", "minLength": 1},
+    "consent": {
+      "type": "object",
+      "properties": {
+        "consent_id": {"type": "string", "minLength": 1},
+        "granted_by": {"type": "string", "minLength": 1},
+        "purpose": {"type": "string", "minLength": 1},
+        "platform": {"type": "string", "minLength": 1},
+        "resource_ref": {"type": "string", "minLength": 1},
+        "allowed_fields": {
+          "type": "array",
+          "items": {"enum": ["text", "created_at", "author_reference"]},
+          "uniqueItems": true
+        },
+        "granted_at": {"type": "string", "format": "date-time"},
+        "expires_at": {"type": "string", "format": "date-time"},
+        "retention_until": {"type": "string", "format": "date-time"},
+        "schema_version": {"const": 1}
+      },
+      "required": [
+        "consent_id",
+        "granted_by",
+        "purpose",
+        "platform",
+        "resource_ref",
+        "allowed_fields",
+        "granted_at",
+        "expires_at",
+        "retention_until",
+        "schema_version"
+      ],
+      "additionalProperties": false
+    },
+    "requested_fields": {
+      "type": "array",
+      "items": {"enum": ["text", "created_at", "author_reference"]},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "page_size": {"type": "integer", "minimum": 1, "maximum": 100},
+    "max_pages": {"type": "integer", "minimum": 1, "maximum": 100},
+    "max_retries": {"type": "integer", "minimum": 0, "maximum": 5},
+    "schema_version": {"const": 1}
+  },
+  "required": [
+    "request_id",
+    "platform",
+    "resource_ref",
+    "idempotency_key",
+    "consent",
+    "requested_fields",
+    "page_size",
+    "max_pages",
+    "max_retries",
+    "schema_version"
+  ],
+  "additionalProperties": false
+}
