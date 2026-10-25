@@ -5,23 +5,24 @@
 Python 3.10 or newer is required.
 
 ```bash
-python -m pip install -e "packages/social-publish-core[dev]" \
-  -e "packages/value-audit-core[dev]" \
-  -e "packages/value-investing-explainer[dev]" \
-  -e "packages/douyin-publish-adapter[dev]"
-pytest
+python -m pip install -r requirements-dev.in
+python -m pytest
 ruff check .
 ruff format --check .
 pyright
 python -m build packages/social-publish-core
+python -m build packages/github-resilient-transport
 python -m build packages/value-audit-core
+python -m build packages/value-audit-tushare
 python -m build packages/value-investing-explainer
 python -m build packages/douyin-publish-adapter
 ```
 
-Add tests for every behavior change. Keep core contracts platform-neutral and
-deterministic. Adapter tests must use fake drivers and require no network,
-authenticated state, production database, or media files.
+For a fast change-specific loop, run the relevant test and lint commands from
+[AGENTS.md](AGENTS.md) before the full checks. Add tests for every behavior
+change. Keep core contracts platform-neutral and deterministic. Adapter tests
+must use fake drivers and require no network, authenticated state, production
+database, or media files.
 
 ## Pull requests
 

@@ -1,6 +1,14 @@
 [tool.pytest.ini_options]
 addopts = "-ra --strict-config --strict-markers"
-pythonpath = ["."]
+pythonpath = [
+  ".",
+  "packages/github-resilient-transport/src",
+  "packages/social-publish-core/src",
+  "packages/value-audit-core/src",
+  "packages/value-audit-tushare/src",
+  "packages/value-investing-explainer/src",
+  "packages/douyin-publish-adapter/src",
+]
 testpaths = ["tests"]
 
 [tool.ruff]
@@ -29,6 +37,14 @@ quote-style = "double"
 [tool.pyright]
 pythonVersion = "3.10"
 typeCheckingMode = "strict"
+extraPaths = [
+  "packages/github-resilient-transport/src",
+  "packages/social-publish-core/src",
+  "packages/value-audit-core/src",
+  "packages/value-audit-tushare/src",
+  "packages/value-investing-explainer/src",
+  "packages/douyin-publish-adapter/src",
+]
 include = [
   "components",
   "packages/github-resilient-transport/src",
