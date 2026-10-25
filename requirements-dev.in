@@ -1,0 +1,6 @@
+-e packages/douyin-publish-adapter[dev]
+-e packages/github-resilient-transport[dev]
+-e packages/social-publish-core[dev]
+-e packages/value-audit-core[dev]
+-e packages/value-audit-tushare[dev]
+-e packages/value-investing-explainer[dev]

@@ -23,18 +23,16 @@ platform-neutral publication orchestration for Python 3.10+:
   retries, deduplication, and explicit partial/failure outcomes.
 
 ```bash
-python -m pip install -e "packages/social-publish-core[dev]" \
-  -e "packages/value-audit-core[dev]" \
-  -e "packages/value-audit-tushare[dev]" \
-  -e "packages/value-investing-explainer[dev]"
-pytest
-ruff check .
-pyright
+python -m pip install -r requirements-dev.in
+python -m pytest tests/test_social_publish_core.py
+ruff check packages/social-publish-core tests/test_social_publish_core.py
 ```
 
 See the [package README](packages/social-publish-core/README.md), the
 [`social-publish` Skill](skills/social-publish/SKILL.md), and the
 [basic example](examples/social_publish_basic.py).
+For the repository map, focused validation examples, and evidence boundaries,
+see [AGENTS.md](AGENTS.md).
 
 ## Value Audit Core
 
