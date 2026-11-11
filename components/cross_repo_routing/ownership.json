@@ -57,6 +57,17 @@
       "requires_private_consumer_update": true
     },
     {
+      "name": "theme-driven-visual-design",
+      "public_paths": [
+        "skills/theme-driven-visual-design/**"
+      ],
+      "private_paths": [
+        ".agents/skills/theme-driven-visual-design/**"
+      ],
+      "private_change_policy": "public-first",
+      "requires_private_consumer_update": true
+    },
+    {
       "name": "douyin-publish-suite",
       "public_paths": [
         "packages/douyin-publish-adapter/**",

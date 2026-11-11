@@ -2,6 +2,45 @@
 
 Reusable, safe-by-default agent Skills and deterministic domain components.
 
+## Shared Visual Design Skill
+
+[`theme-driven-visual-design`](skills/theme-driven-visual-design/SKILL.md)
+guides topic- and narration-specific visual reasoning, scene planning, and
+preview-driven repair for videos, explainers, and presentations. It avoids
+generic template substitution while preserving the consuming workflow's tool,
+cost, provider, and approval boundaries. It supplies no renderer or business
+integration.
+
+The canonical source is this repository's `skills/` directory, not an installed
+consumer copy. Skills are separate from the Python distributions. After a
+version containing the skill is published, preview and install that exact
+reviewed tag or commit using GitHub CLI with `gh skill` support:
+
+```powershell
+gh skill preview cloga/trinity-agentic-kit theme-driven-visual-design@TAG_OR_COMMIT
+gh skill install cloga/trinity-agentic-kit theme-driven-visual-design --pin TAG_OR_COMMIT --agent github-copilot --scope project
+```
+
+Replace `TAG_OR_COMMIT` with a published ref that actually contains the skill;
+these commands do not make an unpublished worktree available upstream.
+Project installation creates a copy under the consumer's `.agents/skills`
+with provenance metadata. It is not live synchronization or cross-repository
+Copilot App Project configuration. Pinned installations require an explicit
+version change and are skipped by `gh skill update`. Installing again into an
+existing destination without `--force` fails; do not treat it as an in-place
+upgrade. Instead, install the next reviewed ref into a separate temporary
+directory using `--dir`, compare its content and provenance with the installed
+copy, and apply the update through the consumer's normal reviewed change
+process. Preserve intentional local changes and the correct new version's
+provenance metadata. Do not silently overwrite local edits or use `--force` to
+avoid that review.
+
+The ownership map routes this skill's source and only the Alpha consumer path
+`.agents/skills/theme-driven-visual-design/**` public-first, with a dependent
+consumer-update task. This is planning metadata, not permission to write Alpha
+or an installation/synchronization operation. If the agreed installation path
+changes, update that exact mapping and its routing tests explicitly.
+
 ## Social Publish Core
 
 ## GitHub Resilient Transport
