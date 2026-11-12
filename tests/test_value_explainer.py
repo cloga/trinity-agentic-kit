@@ -9,7 +9,7 @@ from pathlib import Path
 from types import ModuleType
 from typing import Protocol, cast
 
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator, FormatChecker, ValidationError
 
 from trinity_agentic_kit.value_explainer import (
     EXPLANATION_PACKAGE_SCHEMA,
@@ -64,6 +64,146 @@ def test_versioned_contracts_and_deterministic_orchestration() -> None:
     Draft202012Validator(
         EXPLANATION_PACKAGE_SCHEMA, format_checker=FormatChecker()
     ).validate(first.to_dict())
+
+
+def test_evidence_attribution_round_trips_into_explanation_output() -> None:
+    legacy = TopicCandidate.from_dict(_fixture())
+    legacy_dict = legacy.to_dict()
+    legacy_evidence = cast(list[dict[str, object]], legacy_dict["evidence"])
+    assert "attribution" not in legacy_evidence[0]
+    assert TopicCandidate.from_dict(legacy_dict) == legacy
+
+    candidate_data = _fixture()
+    evidence = cast(list[dict[str, object]], candidate_data["evidence"])
+    evidence[0]["attribution"] = {
+        "author": "Synthetic Author",
+        "work_title": "Synthetic Work",
+        "source_location": "chapter 2",
+        "license_name": "Declared License",
+        "license_uri": "https://example.invalid/license",
+        "attribution_text": "Credit Synthetic Author",
+    }
+    candidate = TopicCandidate.from_dict(candidate_data)
+    expected_attribution = {
+        "author": "Synthetic Author",
+        "work_title": "Synthetic Work",
+        "source_location": "chapter 2",
+        "license_name": "Declared License",
+        "license_uri": "https://example.invalid/license",
+        "attribution_text": "Credit Synthetic Author",
+    }
+    serialized_candidate = candidate.to_dict()
+    serialized_evidence = cast(
+        list[dict[str, object]], serialized_candidate["evidence"]
+    )
+    assert serialized_evidence[0]["attribution"] == expected_attribution
+    Draft202012Validator(
+        TOPIC_CANDIDATE_SCHEMA, format_checker=FormatChecker()
+    ).validate(serialized_candidate)
+
+    result = explain_value_topic(candidate, provider=DeterministicFakeProvider())
+    output = result.to_dict()
+    output_evidence = cast(list[dict[str, object]], output["evidence"])
+    assert output_evidence[0]["attribution"] == expected_attribution
+    Draft202012Validator(
+        EXPLANATION_PACKAGE_SCHEMA, format_checker=FormatChecker()
+    ).validate(output)
+
+
+def test_attribution_rejects_unknown_fields_instead_of_dropping_them() -> None:
+    candidate_data = _fixture()
+    evidence = cast(list[dict[str, object]], candidate_data["evidence"])
+    evidence[0]["attribution"] = {
+        "author": "Synthetic Author",
+        "rights_status": "cleared",
+    }
+
+    try:
+        TopicCandidate.from_dict(candidate_data)
+    except ValueError as error:
+        assert "unsupported fields" in str(error)
+    else:
+        raise AssertionError("Unknown attribution metadata must not be discarded")
+
+
+def test_evidence_rejects_top_level_author_and_license_fields() -> None:
+    for field in ("author", "license"):
+        candidate_data = _fixture()
+        evidence = cast(list[dict[str, object]], candidate_data["evidence"])
+        evidence[0][field] = "Synthetic declaration"
+
+        try:
+            TopicCandidate.from_dict(candidate_data)
+        except ValueError as error:
+            assert field in str(error)
+        else:
+            raise AssertionError(
+                f"Undeclared evidence field {field!r} must not be discarded"
+            )
+
+        try:
+            Draft202012Validator(
+                TOPIC_CANDIDATE_SCHEMA, format_checker=FormatChecker()
+            ).validate(candidate_data)
+        except ValidationError:
+            pass
+        else:
+            raise AssertionError(f"The input schema must reject top-level {field!r}")
+
+
+def test_partial_attribution_round_trips_through_both_schemas() -> None:
+    partial_attributions = (
+        {"author": "Synthetic Author"},
+        {
+            "license_name": "Declared License",
+            "license_uri": "https://example.invalid/license",
+        },
+    )
+    for attribution in partial_attributions:
+        candidate_data = _fixture()
+        evidence = cast(list[dict[str, object]], candidate_data["evidence"])
+        evidence[0]["attribution"] = attribution
+
+        candidate = TopicCandidate.from_dict(candidate_data)
+        candidate_evidence = cast(
+            list[dict[str, object]], candidate.to_dict()["evidence"]
+        )
+        assert candidate_evidence[0]["attribution"] == attribution
+        Draft202012Validator(
+            TOPIC_CANDIDATE_SCHEMA, format_checker=FormatChecker()
+        ).validate(candidate.to_dict())
+
+        result = explain_value_topic(candidate, provider=DeterministicFakeProvider())
+        output = result.to_dict()
+        output_evidence = cast(list[dict[str, object]], output["evidence"])
+        assert output_evidence[0]["attribution"] == attribution
+        Draft202012Validator(
+            EXPLANATION_PACKAGE_SCHEMA, format_checker=FormatChecker()
+        ).validate(output)
+
+        round_tripped = TopicCandidate.from_dict(candidate.to_dict())
+        assert round_tripped == candidate
+
+
+def test_empty_attribution_is_rejected_by_parser_and_input_schema() -> None:
+    candidate_data = _fixture()
+    evidence = cast(list[dict[str, object]], candidate_data["evidence"])
+    evidence[0]["attribution"] = {}
+    try:
+        TopicCandidate.from_dict(candidate_data)
+    except ValueError as error:
+        assert "at least one value" in str(error)
+    else:
+        raise AssertionError("Empty attribution metadata must be rejected")
+
+    try:
+        Draft202012Validator(
+            TOPIC_CANDIDATE_SCHEMA, format_checker=FormatChecker()
+        ).validate(candidate_data)
+    except ValidationError as error:
+        assert "attribution" in str(error)
+    else:
+        raise AssertionError("The input schema must reject empty attribution")
 
 
 def test_fake_provider_satisfies_public_port() -> None:

@@ -12,6 +12,9 @@ explanation package. Validate inputs and outputs with `validate.py`.
 
 1. Require at least one evidence record and one claim. Every claim must cite
    evidence by `source_id`.
+   Preserve available author, work title, stable source location, and declared
+   license/attribution metadata through the explanation output. These fields
+   support traceability only; they do not prove permission or license validity.
 2. Accept only caller-supplied paraphrases, factual summaries,
    public-domain-like paraphrases, or public `value-audit-core` output. Never
    retrieve or invent missing evidence.
@@ -22,6 +25,12 @@ explanation package. Validate inputs and outputs with `validate.py`.
 5. Run deterministic QA and emit all checks and issues. A failed QA result is
    not publication-ready.
 6. Keep the standard non-advice and non-affiliation disclaimer unchanged.
+
+Topic discovery is a separate consumer-owned workflow. A consumer may run
+`research_and_replenish_topic_catalog` with a real source-research agent and a
+durable catalog; repeat scheduling, source retrieval/verification, and atomic
+persistence stay outside this Skill. Candidate schema validity and a source URI
+do not establish that a source was retrieved or that its claims are correct.
 
 ```bash
 python skills/value-investing-explainer/validate.py \

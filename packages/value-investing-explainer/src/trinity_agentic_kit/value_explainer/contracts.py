@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from datetime import date
 from importlib.resources import files
 from typing import Literal, cast
+from urllib.parse import urlparse
 
 PACKAGE_VERSION = "0.1.0"
 EXPLAINER_INPUT_SCHEMA_VERSION = "1.0"
@@ -17,6 +18,83 @@ DISCLAIMER = (
 )
 
 EvidenceKind = Literal["paraphrase", "facts", "public_domain_like", "audit_output"]
+
+
+@dataclass(frozen=True, slots=True)
+class EvidenceAttribution:
+    """Caller-supplied bibliographic and declared license/attribution metadata.
+
+    These fields record claims for traceability. They do not prove authorship,
+    license validity, permission, public-domain status, or compliance.
+    """
+
+    author: str = ""
+    work_title: str = ""
+    source_location: str = ""
+    license_name: str = ""
+    license_uri: str = ""
+    attribution_text: str = ""
+
+    def __post_init__(self) -> None:
+        values = (
+            self.author,
+            self.work_title,
+            self.source_location,
+            self.license_name,
+            self.license_uri,
+            self.attribution_text,
+        )
+        if not all(isinstance(cast(object, value), str) for value in values):
+            raise ValueError("Attribution metadata values must be strings")
+        if not any(value.strip() for value in values):
+            raise ValueError("Attribution metadata must contain at least one value")
+        if any(value != value.strip() for value in values):
+            raise ValueError("Attribution metadata values must be canonical")
+        if self.license_uri:
+            parsed = urlparse(self.license_uri)
+            if parsed.scheme not in ("http", "https") or not parsed.netloc:
+                raise ValueError("license_uri must be an absolute HTTP(S) URI")
+
+    @classmethod
+    def from_dict(cls, value: object) -> EvidenceAttribution:
+        data = _mapping(value, "evidence[].attribution")
+        allowed = {
+            "author",
+            "work_title",
+            "source_location",
+            "license_name",
+            "license_uri",
+            "attribution_text",
+        }
+        unknown = set(data) - allowed
+        if unknown:
+            raise ValueError(
+                "evidence[].attribution has unsupported fields: "
+                + ", ".join(sorted(unknown))
+            )
+        parsed: dict[str, str] = {}
+        for key in allowed:
+            if key not in data:
+                parsed[key] = ""
+                continue
+            raw = data[key]
+            if not isinstance(raw, str):
+                raise ValueError(f"evidence[].attribution.{key} must be a string")
+            if not raw.strip():
+                raise ValueError(f"evidence[].attribution.{key} must be non-empty")
+            parsed[key] = raw.strip()
+        return cls(**parsed)
+
+    def to_dict(self) -> dict[str, str]:
+        values = {
+            "author": self.author,
+            "work_title": self.work_title,
+            "source_location": self.source_location,
+            "license_name": self.license_name,
+            "license_uri": self.license_uri,
+            "attribution_text": self.attribution_text,
+        }
+        return {key: value for key, value in values.items() if value}
 
 
 def _load_schema(filename: str) -> dict[str, object]:
@@ -82,10 +160,33 @@ class EvidenceSource:
     content_kind: EvidenceKind
     uri: str = ""
     provenance_ids: tuple[str, ...] = ()
+    attribution: EvidenceAttribution | None = None
+
+    def __post_init__(self) -> None:
+        if self.attribution is not None and not isinstance(
+            cast(object, self.attribution), EvidenceAttribution
+        ):
+            raise ValueError("attribution must be EvidenceAttribution or None")
 
     @classmethod
     def from_dict(cls, value: object) -> EvidenceSource:
         data = _mapping(value, "evidence[]")
+        allowed = {
+            "source_id",
+            "title",
+            "source_type",
+            "as_of_date",
+            "content_summary",
+            "content_kind",
+            "uri",
+            "provenance_ids",
+            "attribution",
+        }
+        unknown = set(data) - allowed
+        if unknown:
+            raise ValueError(
+                "evidence[] has unsupported fields: " + ", ".join(sorted(unknown))
+            )
         kind = data.get("content_kind")
         if kind not in ("paraphrase", "facts", "public_domain_like", "audit_output"):
             raise ValueError("evidence[].content_kind is unsupported")
@@ -106,10 +207,15 @@ class EvidenceSource:
             provenance_ids=_strings(
                 data.get("provenance_ids", []), "evidence[].provenance_ids"
             ),
+            attribution=(
+                EvidenceAttribution.from_dict(data["attribution"])
+                if "attribution" in data
+                else None
+            ),
         )
 
     def to_dict(self) -> dict[str, object]:
-        return {
+        result: dict[str, object] = {
             "source_id": self.source_id,
             "title": self.title,
             "source_type": self.source_type,
@@ -119,6 +225,9 @@ class EvidenceSource:
             "uri": self.uri,
             "provenance_ids": list(self.provenance_ids),
         }
+        if self.attribution is not None:
+            result["attribution"] = self.attribution.to_dict()
+        return result
 
 
 @dataclass(frozen=True, slots=True)

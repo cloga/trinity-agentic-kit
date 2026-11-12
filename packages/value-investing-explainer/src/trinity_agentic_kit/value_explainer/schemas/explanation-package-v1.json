@@ -86,7 +86,21 @@
         "content_summary": { "type": "string", "minLength": 1 },
         "content_kind": { "enum": ["paraphrase", "facts", "public_domain_like", "audit_output"] },
         "uri": { "type": "string" },
-        "provenance_ids": { "$ref": "#/$defs/stringArray" }
+        "provenance_ids": { "$ref": "#/$defs/stringArray" },
+        "attribution": { "$ref": "#/$defs/attribution" }
+      }
+    },
+    "attribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "author": { "type": "string", "minLength": 1 },
+        "work_title": { "type": "string", "minLength": 1 },
+        "source_location": { "type": "string", "minLength": 1 },
+        "license_name": { "type": "string", "minLength": 1 },
+        "license_uri": { "type": "string", "format": "uri" },
+        "attribution_text": { "type": "string", "minLength": 1 }
       }
     }
   }
